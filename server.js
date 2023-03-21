@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // static Folder:
-app.use(express.static(path.join(__dirname, "static")));
+app.use(express.static(path.join(__dirname,'public')))
 
 // multer middleware function:
 const fromDataHandler = multer({
@@ -30,13 +30,17 @@ const fromDataHandler = multer({
   },
 ]);
 
+app.get('/', (req, res)=>{
+  res.render('public/index.html')
+})
+
 app.post("/", fromDataHandler, (req, res) => {
-  console.log(req.files);
+  // console.log(req.files);
   const { name, email, cell } = req.body;
   const { cv, gallary,photo } = req.files;
   //   get all Gallery Images link:
   const galLinks = gallary.map((item) => {
-    let link = item.destination.concat("/", cv[0].filename);
+    let link = item.destination.concat("/", gallary[0].filename);
     return link;
   });
 

@@ -4,9 +4,9 @@ const path = require("path");
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     if (file.fieldname == "cv") {
-      cb(null, req.body.name+"_cv"+".pdf");
+      cb(null, req.body.name.replaceAll(' ', '_')+"_cv"+".pdf");
     } else {
-      cb(null, Date.now() + "_" + file.originalname);
+      cb(null, Date.now() + "_" + file.originalname.replaceAll(' ', '_'));
     }
   },
   destination: (req, file, cb) => {
